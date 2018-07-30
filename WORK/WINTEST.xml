@@ -29,6 +29,7 @@
 
 echo execution
 echo modification to test version control
+echo modification from the github
 ping -n 10 localhost
 
 ! @set retcode=%errorlevel%
