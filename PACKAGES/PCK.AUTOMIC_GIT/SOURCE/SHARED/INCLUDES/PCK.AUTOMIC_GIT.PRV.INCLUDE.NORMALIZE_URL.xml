@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobi>
+   <metadata>
+      <row>
+         <version>12.2.0</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <name>PCK.AUTOMIC_GIT.PRV.INCLUDE.NORMALIZE_URL</name>
+         <type>JOBI</type>
+         <description>Normalize given url</description>
+         <versioning_id>302273921</versioning_id>
+      </row>
+   </general_attributes>
+   <scripts>
+      <row>
+         <process><![CDATA[! Purpose of this command is to remove the ending slash from uri
+
+: SET &CHECK# = STR_ENDS_WITH(&UC4RB_GIT_CMD#, "/")
+: IF &CHECK# EQ "Y"
+:  SET &CHECK_LEN# = STR_LENGTH(&UC4RB_GIT_CMD#)
+:  SET &CHECK_LEN# = SUB(&CHECK_LEN#,1)
+:  SET &UC4RB_GIT_CMD# = SUBSTR(&UC4RB_GIT_CMD#,1,&CHECK_LEN#)
+: ENDIF
+]]></process>
+      </row>
+   </scripts>
+</jobi>

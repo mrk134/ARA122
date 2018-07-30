@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<docu>
+   <metadata>
+      <row>
+         <version>12.2.0</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <name>PCK.AUTOMIC_GIT.PUB.DOC</name>
+         <type>DOCU</type>
+         <description>Git Documentation</description>
+         <versioning_id>-462859290</versioning_id>
+      </row>
+   </general_attributes>
+   <documentation>
+      <row>
+         <Docu><![CDATA[Executes GIT operations, like file add/remove, clone, log, commit etc.
+
+Protocols supported - http/https
+
+=Known Issues=
+The current implementation does support Basic HTTP Authentication. However, it has to be noted that the credentials are passed as part of the URL, which will be stored in git repository configuration as plain text. Also, if the authentication fails, an error message containing the URL will be visible in the report.
+URL has syntax https://<username>:<password>@github.com/username/repository.git, it has to be noted that "@" character is not allowed in username or password.
+
+
+=Supported versions=
+
+See http://docs.automic.com/compatibility?len=Package.Git&comp=PCK.AUTOMIC_GIT&version=1.0.0
+
+=Setup=
+
+* Ensure, that GIT CLI (3rd-party) is available on the target host. 
+* An example of a CLI can be downloaded from http://git-scm.com/
+
+=Rollback=
+
+The GIT actions do not support rollbacks yet.]]></Docu>
+      </row>
+   </documentation>
+</docu>

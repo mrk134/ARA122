@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs>
+   <metadata>
+      <row>
+         <version>12.2.0</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>11.2</minimum_ae_version>
+         <auto_deactivation>F</auto_deactivation>
+         <child_flags>00000000000000000000000000000000</child_flags>
+         <deactivation_condition>ANY_OK</deactivation_condition>
+         <platform>UNIX</platform>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <max_parallel_action>1</max_parallel_action>
+         <mrt_time>000000</mrt_time>
+         <name>PCK.AUTOMIC_GIT.PRV.JOB.ADD@UNIX</name>
+         <type>JOBS</type>
+         <inherit_output_filter>N</inherit_output_filter>
+         <queue>CLIENT_QUEUE</queue>
+         <description>Git Add</description>
+         <versioning_id>-1042486448</versioning_id>
+      </row>
+   </general_attributes>
+   <scripts>
+      <row>
+         <process><![CDATA[:INC PCK.ITPA_SHARED.PUB.INCLUDE.ATTACH
+
+! Normalize Path
+:DEFINE &STRING_ARR#,string,30
+:INC PCK.AUTOMIC_FILESYSTEM.PUB.INCLUDE.NORMALIZE_PATH "UC4RB_CONVERTED_STRING" = "UC4RB_GIT_WORKING_DIRECTORY"
+
+! Header Parameter Validation
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.PARAM_VALIDATION
+
+:SET &UC4RB_LOGGING_PARAMETER# = "Repository Name"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_GIT_REPO#
+:SET &UC4RB_LOGGING_PARAMETER# = "Path Spec"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_GIT_PATHSPEC#
+:SET &UC4RB_LOGGING_PARAMETER# = "Working copy Directory"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_GIT_WORKING_DIRECTORY#
+:SET &UC4RB_LOGGING_PARAMETER# = "Additional Options"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.PARAM &UC4RB_LOGGING_PARAMETER_VAL# = &UC4RB_GIT_OPTIONS#
+
+! Verify Working copy Directory
+errors=0
+:SET &UC4RB_CHECKME# = &UC4RB_GIT_WORKING_DIRECTORY#
+:INCLUDE PCK.AUTOMIC_FILESYSTEM.PUB.INCLUDE.CHECK_UNIX_SHELL_FILE_EXISTS
+if [ "$EXIST" -eq "0" ] ;
+then
+:SET &UC4RB_LOGGING_PARAMETER# = "Working copy Directory"
+:SET &UC4RB_LOGGING_ERROR# = "Working copy Directory '&UC4RB_GIT_WORKING_DIRECTORY#' doesn't exist"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR.PARAMETER
+errors=1
+fi
+if [ "$ISFILE" -eq "1" ] ;
+then
+:SET &UC4RB_LOGGING_PARAMETER# = "Working copy Directory"
+:SET &UC4RB_LOGGING_ERROR# = "Working copy Directory '&UC4RB_GIT_WORKING_DIRECTORY#' is a file"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR.PARAMETER
+errors=1
+fi
+
+! Verify Repository
+:SET &UC4RB_CHECKME# = "&UC4RB_GIT_WORKING_DIRECTORY#/&UC4RB_GIT_REPO#"
+:INCLUDE PCK.AUTOMIC_FILESYSTEM.PUB.INCLUDE.CHECK_UNIX_SHELL_FILE_EXISTS
+if [ "$EXIST" -eq "0" ] ;
+then
+:SET &UC4RB_LOGGING_PARAMETER# = "Repository"
+:SET &UC4RB_LOGGING_ERROR# = "Repository '&UC4RB_GIT_REPO#' doesn't exist"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR.PARAMETER
+errors=1
+fi
+if [ "$ISFILE" -eq "1" ] ;
+then
+:SET &UC4RB_LOGGING_PARAMETER# = "Repository"
+:SET &UC4RB_LOGGING_ERROR# = "Repository '&UC4RB_GIT_REPO#' is a file"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.ERROR.PARAMETER
+errors=1
+fi
+
+! stop execution if validation errors occurred
+if [ $errors -gt 0 ] ; then
+  exit $errors;
+fi
+
+! Start execution
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.LOGGING.HEADER.EXECUTION
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.CHANGE_DIRECTORY_TO_AGENT_BIN
+
+! Add file contents to the index
+:INC PCK.AUTOMIC_GIT.PRV.INCLUDE.COMMAND
+:SET &UC4RB_GIT_CMD# = "&UC4RB_GIT_CMD# add"
+
+! Add command options if specified
+:INC PCK.AUTOMIC_GIT.PRV.INCLUDE.OPTIONS
+
+! Add pathspec to command
+:SET &UC4RB_GIT_CMD# = '&UC4RB_GIT_CMD# "&UC4RB_GIT_PATHSPEC#"'
+
+cd "&UC4RB_GIT_WORKING_DIRECTORY#"
+cd "&UC4RB_GIT_REPO#"
+:INC PCK.ITPA_SHARED.PRV.INCLUDE.CHECK_SHELL_CMD@UNIX
+
+&UC4RB_GIT_CMD# 2>/dev/null
+! Status message
+:SET &UC4RB_LOGGING_INFO# = "******** GIT ADD ACTION EXECUTED SUCCESSFULLY ********"
+:SET &UC4RB_LOGGING_ERROR# = "******** GIT ADD ACTION FAILED ********"
+:SET &TEMP# = "Error may occurs because invalid username or password, or repository not found"
+!------------------------------------------ Error Handling -----------------------------------------------------------------------------------------------------
+:INC PCK.AUTOMIC_GIT.PRV.INCLUDE.CHECK_JOBSTATUS]]></process>
+      </row>
+      <row>
+         <pre_process>:INC PCK.ITPA_SHARED.PRV.INCLUDE.PREPARE_JOB</pre_process>
+      </row>
+   </scripts>
+   <job_attributes>
+      <row>
+         <activation_at_runtime>1</activation_at_runtime>
+         <platform>UNIX</platform>
+         <agent><![CDATA[<UNIX>]]></agent>
+         <job_report_path>2</job_report_path>
+         <priority>0</priority>
+         <unix_shell></unix_shell>
+         <unix_shell_options></unix_shell_options>
+         <unix_type></unix_type>
+         <unix_cmd></unix_cmd>
+      </row>
+   </job_attributes>
+   <rollback_definitions>
+      <row>
+      </row>
+   </rollback_definitions>
+</jobs>

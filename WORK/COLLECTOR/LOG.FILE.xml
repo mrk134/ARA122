@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<vara>
+   <metadata>
+      <row>
+         <version>12.2.0</version>
+      </row>
+   </metadata>
+   <general_attributes>
+      <row>
+         <minimum_ae_version>12.1</minimum_ae_version>
+         <platform>IA</platform>
+         <last_runtimes>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</last_runtimes>
+         <name>LOG.FILE</name>
+         <type>VARA</type>
+         <sub_type>XML</sub_type>
+         <description>LOG.FILE</description>
+         <versioning_id>-1204376815</versioning_id>
+      </row>
+   </general_attributes>
+   <variable_definitions>
+      <row>
+         <column_count>5</column_count>
+         <on_not_found>I</on_not_found>
+         <sort_order>0</sort_order>
+         <type>XML</type>
+         <data_type>C</data_type>
+         <validity_range>FREI</validity_range>
+      </row>
+   </variable_definitions>
+   <static_values>
+      <row>
+         <client>100</client>
+         <xml><![CDATA[<event_attributes><description></description><key>line</key><type>STRING</type></event_attributes>]]></xml>
+         <validity_range>FREI</validity_range>
+         <key>attribute_5a4c1d9f-a7d3-426c-bb78-795cd05b92c0</key>
+      </row>
+   </static_values>
+</vara>
