@@ -32,6 +32,7 @@ echo modification to test version control
 echo modification 2 depuis AE
 echo modification from the github
 echo modification from github 2
+echo modification depuis filesystem
 ping -n 10 localhost
 
 ! @set retcode=%errorlevel%
