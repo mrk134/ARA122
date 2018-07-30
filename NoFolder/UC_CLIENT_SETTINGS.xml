@@ -32,7 +32,7 @@
       </row>
       <row>
          <client>100</client>
-         <value1>git@github.com:mrk134/ARA122.git</value1>
+         <value1>ssh://git@github.com/mrk134/ara122.git</value1>
          <validity_range>FREI</validity_range>
          <key>REMOTE_REPOSITORY_URL</key>
       </row>
