@@ -28,6 +28,7 @@
          <process><![CDATA[! insert these lines in your script to determine if an error occurred
 
 echo execution
+echo modification to test version control
 ping -n 10 localhost
 
 ! @set retcode=%errorlevel%
